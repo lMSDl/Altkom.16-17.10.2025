@@ -20,6 +20,8 @@ namespace DAL
         {
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
+            modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications);
+
             base.OnModelCreating(modelBuilder);
         }
 

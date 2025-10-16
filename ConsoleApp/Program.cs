@@ -24,13 +24,12 @@ using (var context = new Context(config.Options))
 
     Order order = new Order()
     {
-        Name = "Zamówienie 1",
-        Products = new List<Product>()
-        {
-            new Product() { Name = "Produkt 1" },
-            new Product() { Name = "Produkt 2" },
-        }
+        Name = "Zamówienie 1"
     };
+    order.Products.Add(
+            new Product() { Name = "Produkt 1" });
+    order.Products.Add(
+            new Product() { Name = "Produkt 2" });
 
     Console.WriteLine(context.ChangeTracker.DebugView.ShortView);
 
@@ -79,13 +78,12 @@ using (var context = new Context(config.Options))
 
     order = new Order()
     {
-        Name = "Zamówienie 2",
-        Products = new List<Product>()
-        {
-            new Product() { Name = "Produkt 3" },
-            new Product() { Name = "Produkt 4" },
-        }
+        Name = "Zamówienie 2"
     };
+    order.Products.Add(
+            new Product() { Name = "Produkt 3" });
+    order.Products.Add(
+            new Product() { Name = "Produkt 4" });
 
     context.Add(order);
 
@@ -130,12 +128,12 @@ using (var context = new Context(config.Options))
 }
 
 
-config.UseChangeTrackingProxies();
+/*config.UseChangeTrackingProxies();
 
 using (var context = new Context(config.Options){ ChangeTracker = { AutoDetectChangesEnabled = false }})
 {
 
-    /*var order = new Order()
+    *//*var order = new Order()
     {
         Name = "Zamówienie 3",
         Products = new List<Product>()
@@ -143,7 +141,7 @@ using (var context = new Context(config.Options){ ChangeTracker = { AutoDetectCh
             new Product() { Name = "Produkt 6" },
             new Product() { Name = "Produkt 7" },
         }
-    };*/
+    };*//*
 
     var order = context.CreateProxy<Order>();
     order.Name = "Zamówienie 3";
@@ -170,14 +168,43 @@ using (var context = new Context(config.Options){ ChangeTracker = { AutoDetectCh
     Console.WriteLine("----");
     Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-    /*
+    *//*
     context.ChangeTracker.DetectChanges(); //ręczne wywołanie DetectChanges, bo AutoDetectChangesEnabled = false
 
     Console.WriteLine(context.Entry(order).State);
 
     Console.WriteLine("----");
     Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-    */
+    *//*
 
 
+}*/
+
+
+using (var context = new Context(config.Options) { ChangeTracker = { AutoDetectChangesEnabled = false } })
+{
+
+    var order = new Order { Name = "Zamówienie 4" };
+    order.OrderDate = DateTime.Now.AddDays(-4);
+    order.Products.Add(new Product { Name = "Produkt 8" });
+
+    context.Add(order);
+
+    Console.WriteLine("----");
+    Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+
+    context.SaveChanges();
+
+    order.OrderDate = DateTime.Now.AddDays(-3);
+
+    Console.WriteLine("----");
+    Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+
+    order.Name = "Zamówienie 4 - zmodyfikowane";
+
+    Console.WriteLine("----");
+    Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+
+
+    context.SaveChanges();
 }
