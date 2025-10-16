@@ -107,7 +107,7 @@ namespace ConsoleApp
                 //istnieje możliwość wyłączenia modyfikacji poszczególnych właściwości obiektu, np. Name, OrderDate, Products
                 context.Entry(order).Property(x => x.OrderDate).IsModified = false;
 
-                order.CreatedDate = DateTime.Now.AddDays(-10); //CreatedDate nie powinien być modyfikowany
+                //order.CreatedDate = DateTime.Now.AddDays(-10); //CreatedDate nie powinien być modyfikowany
 
                 Console.WriteLine("----");
                 Console.WriteLine(context.ChangeTracker.DebugView.ShortView);
