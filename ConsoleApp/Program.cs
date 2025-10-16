@@ -2,20 +2,20 @@
 
 using DAL;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Models;
 
 var config = new DbContextOptionsBuilder<Context>()
-    .UseSqlServer("Server=(local);Database=EF;TrustServerCertificate=True;Integrated Security=true")
-    .Options;
+    .UseSqlServer("Server=(local);Database=EF;TrustServerCertificate=True;Integrated Security=true");
 
-using (var context = new Context(config))
+using (var context = new Context(config.Options))
 {
     context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
 }
 
 
-using (var context = new Context(config))
+using (var context = new Context(config.Options))
 {
 
     //domylne ustawienie wykrywania zmian w kontekście
@@ -126,5 +126,58 @@ using (var context = new Context(config))
 
     Console.WriteLine("----");
     Console.WriteLine(context.ChangeTracker.DebugView.ShortView);
+
+}
+
+
+config.UseChangeTrackingProxies();
+
+using (var context = new Context(config.Options){ ChangeTracker = { AutoDetectChangesEnabled = false }})
+{
+
+    /*var order = new Order()
+    {
+        Name = "Zamówienie 3",
+        Products = new List<Product>()
+        {
+            new Product() { Name = "Produkt 6" },
+            new Product() { Name = "Produkt 7" },
+        }
+    };*/
+
+    var order = context.CreateProxy<Order>();
+    order.Name = "Zamówienie 3";
+    order.Products.Add(context.CreateProxy<Product>());
+    order.Products.Add(context.CreateProxy<Product>());
+    order.Products.ElementAt(0).Name = "Produkt 6";
+    order.Products.ElementAt(1).Name = "Produkt 7";
+
+
+    context.Add(order);
+
+    Console.WriteLine("----");
+    Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+
+    context.SaveChanges();
+
+    Console.WriteLine("----");
+    Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+
+    order.Name = "Zamówienie 3 - zmienione";
+
+    Console.WriteLine(context.Entry(order).State);
+
+    Console.WriteLine("----");
+    Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+
+    /*
+    context.ChangeTracker.DetectChanges(); //ręczne wywołanie DetectChanges, bo AutoDetectChangesEnabled = false
+
+    Console.WriteLine(context.Entry(order).State);
+
+    Console.WriteLine("----");
+    Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+    */
+
 
 }
