@@ -25,19 +25,24 @@ namespace DAL
             base.OnModelCreating(modelBuilder);
         }
 
+        public bool RandomFail { get; set; } 
 
-        /*public override int SaveChanges()
+        public override int SaveChanges()
         {
-            ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
+            /*ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
                 .Where(x => x.Entity is Entity)
                 .ToList()
                 .ForEach(e =>
                 {
                     e.Property(nameof(Entity.CreatedDate)).IsModified = false;
-                });
+                });*/
 
+            if(RandomFail && Random.Shared.Next(1, 25) == 1)
+            {
+                throw new DbUpdateException("Losowy błąd podczas zapisu do bazy");
+            }
 
             return base.SaveChanges();
-        }*/
+        }
     }
 }
