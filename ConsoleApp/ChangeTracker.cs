@@ -181,7 +181,7 @@ namespace ConsoleApp
 
         public static void ChangedNotification(DbContextOptions<Context> config)
         {
-            using (var context = new Context(config.Options) { ChangeTracker = { AutoDetectChangesEnabled = false } })
+            using (var context = new Context(config) { ChangeTracker = { AutoDetectChangesEnabled = false } })
             {
 
                 var order = new Order { Name = "Zamówienie 4" };

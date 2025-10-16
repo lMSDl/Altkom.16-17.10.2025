@@ -20,13 +20,13 @@ namespace DAL
         {
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
-            modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications);
+            //modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications);
 
             base.OnModelCreating(modelBuilder);
         }
 
 
-        public override int SaveChanges()
+        /*public override int SaveChanges()
         {
             ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
                 .Where(x => x.Entity is Entity)
@@ -38,6 +38,6 @@ namespace DAL
 
 
             return base.SaveChanges();
-        }
+        }*/
     }
 }

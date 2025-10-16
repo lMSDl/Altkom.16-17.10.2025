@@ -9,6 +9,8 @@ namespace DAL.Configuration
         public override void Configure(EntityTypeBuilder<Order> builder)
         {
             base.Configure(builder);
+
+            builder.Property(x => x.OrderDate).IsConcurrencyToken();
         }
     }
 }
