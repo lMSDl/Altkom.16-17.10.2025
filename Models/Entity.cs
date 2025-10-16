@@ -8,6 +8,9 @@ namespace Models
         public int Id { get; set; }
         //public DateTime CreatedDate { get; set; } = DateTime.Now;
 
+        //ShadowProperty
+        //public bool IsDeleted { get; set; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {

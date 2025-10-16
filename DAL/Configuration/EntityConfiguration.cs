@@ -12,6 +12,10 @@ namespace DAL.Configuration
             //uzywamy wersji generycznej funkcji Property podając typ kolumny i nazwę kolumny + konfiguracja
             //shadow property nie jest dostępne w modelu, ale jest dostępne w kontekście
             builder.Property<DateTime>("CreatedAt").HasDefaultValueSql("GETDATE()");
+
+            builder.Property<bool>("IsDeleted");
+
+            builder.HasQueryFilter(e => EF.Property<bool>(e, "IsDeleted") == false);
         }
     }
 }
