@@ -32,7 +32,7 @@ namespace DAL.Configuration
             //builder.Property(x => x.OrderParameters).HasConversion(new EnumToStringConverter<OrderParameters>());
             builder.Property(x => x.OrderParameters).HasConversion<string>();
 
-            builder.Property(x => x.Name).HasConversion(new ObfuscationConverter());
+            //builder.Property(x => x.Name).HasConversion(new ObfuscationConverter());
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DAL.Conventions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Models;
 
 namespace DAL
@@ -41,7 +44,35 @@ namespace DAL
             modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferProperty);
             //domyślne ustawienie to PropertyAccessMode.PreferFieldDuringConstruction, czyli dostęp przez pola podczas tworzenia obiektu, a potem przez właściwości
             //modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruction);
+
+
+            modelBuilder.Model.GetEntityTypes()
+                .SelectMany(x => x.GetProperties())
+                .Where(x => x.ClrType == typeof(int))
+                .Where(x => x.Name == "Key")
+                .ToList()
+                .ForEach(x =>
+                {
+                    x.IsNullable = false;
+                    ((IMutableEntityType)x.DeclaringType).SetPrimaryKey(x);
+                });
+
+
         }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            base.ConfigureConventions(configurationBuilder);
+
+            //configurationBuilder.Properties<DateTime>().HavePrecision(5);
+
+            configurationBuilder.Conventions.Add(_ => new DateTimePrecisionConvention());
+            configurationBuilder.Conventions.Add(_ => new PluralizeTableNameConvention());
+            configurationBuilder.Conventions.Add(_ => new StringObfuscationConvention());
+
+            //configurationBuilder.Conventions.Remove(typeof(KeyDiscoveryConvention));
+        }
+
 
         public bool RandomFail { get; set; } 
 
