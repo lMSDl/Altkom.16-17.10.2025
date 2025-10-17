@@ -41,9 +41,13 @@ TemporalTables.Run(config);
 
 Transactions.Run(config, false);
 
+
+config.LogTo(Console.WriteLine);
 using (var context = new Context(config.Options))
 {
-    var orders = context.Set<Order>().Include(o => o.Products).ToList();
+    var products = context.Set<Product>()/*.Include(x => x.ProductDetails)*/.ToList();
+
+    context.Set<ProductDetails>().Load();
 }
 
 

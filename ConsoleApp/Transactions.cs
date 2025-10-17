@@ -12,7 +12,12 @@ namespace ConsoleApp
 
 
 
-            var products = Enumerable.Range(100, 50).Select(x => new Product { Name = $"Product {x}", Price = x * (decimal)Random.Shared.NextDouble() }).ToList();
+            var products = Enumerable.Range(100, 50).Select(x => new Product
+            {
+                Name = $"Product {x}",
+                Price = x * (decimal)Random.Shared.NextDouble(),
+                ProductDetails = new ProductDetails { Weight = x * 0.1f, Depth = x * 0.2f, Height = x * 0.3f, Width = x * 0.4f }
+            }).ToList();
             var orders = Enumerable.Range(1, 5).Select(x => new Order { OrderDate = DateTime.Now.AddDays(-x), Name = $"Zamówienie {x}", 
                                                                         OrderType = (OrderType) (x % Enum.GetValues<OrderType>().Length),
                                                                         OrderParameters = (OrderParameters) ((x * x) % 31) }).ToList();
