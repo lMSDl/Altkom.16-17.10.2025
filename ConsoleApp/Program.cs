@@ -35,9 +35,9 @@ using (var context = new Context(config.Options))
 
 //CompileQuery.Run(config);
 
-BackingFields.Run(config);
+//BackingFields.Run(config);
 
-
+ComputedColumns.Run(config);
 
 
 void OrderBy(bool orderBy, string columnName)
