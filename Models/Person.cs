@@ -7,5 +7,7 @@
 
         public int AddressId { get; set; }
         public Address? Address { get; set; }
+
+        public string? OptionalDescription { get; set; } = null;
     }
 }

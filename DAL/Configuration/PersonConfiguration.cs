@@ -16,6 +16,10 @@ namespace DAL.Configuration
                 x.HasPeriodStart("ValidFrom");
                 x.HasPeriodEnd("ValidTo");
             }));
+
+            builder.Property(x => x.OptionalDescription).IsSparse();
+            //istnieje możliwość założenia index na kolumnę sparse
+            //builder.HasIndex(x => x.OptionalDescription);
         }
     }
 }
