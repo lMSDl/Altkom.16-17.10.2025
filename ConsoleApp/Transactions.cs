@@ -6,7 +6,7 @@ namespace ConsoleApp
 {
     internal class Transactions
     {
-        public static void Run(DbContextOptionsBuilder<Context> config)
+        public static void Run(DbContextOptionsBuilder<Context> config, bool randomFail = true)
         {
 
 
@@ -16,7 +16,7 @@ namespace ConsoleApp
             var orders = Enumerable.Range(1, 5).Select(x => new Order { OrderDate = DateTime.Now.AddDays(-x), Name = $"Zamówienie {x}" }).ToList();
 
             using var context = new Context(config.Options);
-            context.RandomFail = true;
+            context.RandomFail = randomFail;
 
 
             using var transaction = context.Database.BeginTransaction();

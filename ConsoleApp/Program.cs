@@ -24,22 +24,28 @@ using (var context = new Context(config.Options))
 
 //GlobalFilters.Run(config);
 
-Transactions.Run(config);
+//Transactions.Run(config);
+
+Transactions.Run(config, false);
 
 
-
-
+OrderBy(false, "Price");
 
 
 void OrderBy(bool orderBy, string columnName)
 {
+    config.LogTo(Console.WriteLine);
     using var context = new Context(config.Options);
 
-    var query = (IQueryable<Product>)context.Set<Product>();
-    if (orderBy)
+    /*var query = (IQueryable<Product>)context.Set<Product>();
+    if (!orderBy)
         query = query.OrderByDescending(SelectColumn(columnName));
     else
-        query = query.OrderBy(SelectColumn(columnName));
+        query = query.OrderBy(SelectColumn(columnName));*/
+
+    var query = (IQueryable<Product>)context.Set<Product>().OrderBy(SelectColumn(columnName));
+    if(!orderBy)
+       query = query.Reverse();
 
     query.ToList().ForEach(p => Console.WriteLine($"{p.Id}: {p.Name} - {p.Price}"));
 }
