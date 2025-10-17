@@ -1,6 +1,7 @@
 ﻿using DAL;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using NetTopologySuite.Geometries;
 
 namespace ConsoleApp
 {
@@ -20,7 +21,9 @@ namespace ConsoleApp
             }).ToList();
             var orders = Enumerable.Range(1, 5).Select(x => new Order { OrderDate = DateTime.Now.AddDays(-x), Name = $"Zamówienie {x}", 
                                                                         OrderType = (OrderType) (x % Enum.GetValues<OrderType>().Length),
-                                                                        OrderParameters = (OrderParameters) ((x * x) % 31) }).ToList();
+                                                                        OrderParameters = (OrderParameters) ((x * x) % 31),
+                                                                        DeliveryPoint = new Point(51 + 0.1 * x, 19 - 0.1 * x) { SRID = 4326 }
+            }).ToList();
 
             using var context = new Context(config.Options);
             context.RandomFail = randomFail;

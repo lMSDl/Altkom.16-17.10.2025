@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using NetTopologySuite.Geometries;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Models
@@ -34,5 +35,8 @@ namespace Models
 
         public OrderType OrderType { get; set; } = OrderType.Standard;
         public OrderParameters OrderParameters { get; set; } = OrderParameters.None;
+
+
+        public Point? DeliveryPoint { get; set; }
     }
 }
