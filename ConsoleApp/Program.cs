@@ -31,7 +31,9 @@ using (var context = new Context(config.Options))
 
 //RelatedData.Run(config);
 
-TemporalTables.Run(config);
+//TemporalTables.Run(config);
+
+CompileQuery.Run(config);
 
 void OrderBy(bool orderBy, string columnName)
 {
