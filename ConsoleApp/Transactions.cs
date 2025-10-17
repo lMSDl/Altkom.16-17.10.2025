@@ -9,11 +9,15 @@ namespace ConsoleApp
         public static void Run(DbContextOptionsBuilder<Context> config)
         {
 
-            var products = Enumerable.Range(100, 50).Select(x => new Product { Name = $"Product {x}", Price = x * 10 }).ToList();
+
+
+
+            var products = Enumerable.Range(100, 50).Select(x => new Product { Name = $"Product {x}", Price = x * (decimal)Random.Shared.NextDouble() }).ToList();
             var orders = Enumerable.Range(1, 5).Select(x => new Order { OrderDate = DateTime.Now.AddDays(-x), Name = $"Zamówienie {x}" }).ToList();
 
             using var context = new Context(config.Options);
             context.RandomFail = true;
+
 
             using var transaction = context.Database.BeginTransaction();
 
@@ -45,6 +49,10 @@ namespace ConsoleApp
             }
 
             transaction.Commit(); //zapisuje zmiany w bazie danych
+
+
+
+           
         }
     }
 }
