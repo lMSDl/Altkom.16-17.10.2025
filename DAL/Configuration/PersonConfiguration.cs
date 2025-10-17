@@ -20,6 +20,13 @@ namespace DAL.Configuration
             builder.Property(x => x.OptionalDescription).IsSparse();
             //istnieje możliwość założenia index na kolumnę sparse
             //builder.HasIndex(x => x.OptionalDescription);
+
+
+            builder.OwnsOne(x => x.Address, navigationBuilder =>
+            {
+                navigationBuilder.ToJson();
+                navigationBuilder.OwnsOne(a => a.Coordinates);
+            });
         }
     }
 }

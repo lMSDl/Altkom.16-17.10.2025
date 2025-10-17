@@ -68,7 +68,7 @@ namespace DAL
 
             configurationBuilder.Conventions.Add(_ => new DateTimePrecisionConvention());
             configurationBuilder.Conventions.Add(_ => new PluralizeTableNameConvention());
-            configurationBuilder.Conventions.Add(_ => new StringObfuscationConvention());
+            //configurationBuilder.Conventions.Add(_ => new StringObfuscationConvention());
 
             //configurationBuilder.Conventions.Remove(typeof(KeyDiscoveryConvention));
         }
