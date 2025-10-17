@@ -16,8 +16,17 @@ namespace ConsoleApp
                 LastName = "Kowalski",
             };
 
+            person.Address = new Address
+            {
+                Street = "Mickiewicza",
+                City = "Warszawa",
+                ZipCode = "00-001"
+            };
+
             context.Add(person);
             context.SaveChanges();
+
+            var time = DateTime.UtcNow;
 
             Thread.Sleep(2500);
 
@@ -25,6 +34,13 @@ namespace ConsoleApp
             context.SaveChanges();
 
             Thread.Sleep(2500);
+
+            person.Address = new Address
+            {
+                Street = "Słowackiego",
+                City = "Kraków",
+                ZipCode = "30-001"
+            };
 
             person.LastName = "Nowak";
             context.SaveChanges();
@@ -51,6 +67,9 @@ namespace ConsoleApp
             {
                 Console.WriteLine($"Stan pomiędzy 5 a 1 sek w przeszłości: {p.FirstName} {p.LastName}");
             }
+
+
+            person = context.Set<Person>().TemporalAsOf(time).Single();
         }
     }
 }
