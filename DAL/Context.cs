@@ -36,6 +36,11 @@ namespace DAL
             //modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications);
 
             base.OnModelCreating(modelBuilder);
+
+            //możemy wpływać na sposób dostępu do właściwości w modelu, np. preferując dostęp przez właściwości zamiast pól
+            modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferProperty);
+            //domyślne ustawienie to PropertyAccessMode.PreferFieldDuringConstruction, czyli dostęp przez pola podczas tworzenia obiektu, a potem przez właściwości
+            //modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruction);
         }
 
         public bool RandomFail { get; set; } 

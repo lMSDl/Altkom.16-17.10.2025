@@ -5,14 +5,16 @@ namespace Models
 {
     public class Order : Entity
     {
-        private string name = string.Empty;
+        //private string name = string.Empty;
+        private string _name = string.Empty;
+        //private string m_name = string.Empty;
 
         public string Name
         {
-            get => name;
+            get => _name;
             set
             {
-                name = value;
+                _name = value;
                 OnPropertyChanged();
             }
         }

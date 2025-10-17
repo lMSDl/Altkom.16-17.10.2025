@@ -33,25 +33,30 @@ using (var context = new Context(config.Options))
 
 //TemporalTables.Run(config);
 
-CompileQuery.Run(config);
+//CompileQuery.Run(config);
+
+BackingFields.Run(config);
+
+
+
 
 void OrderBy(bool orderBy, string columnName)
-{
-    config.LogTo(Console.WriteLine);
-    using var context = new Context(config.Options);
+    {
+        config.LogTo(Console.WriteLine);
+        using var context = new Context(config.Options);
 
-    /*var query = (IQueryable<Product>)context.Set<Product>();
-    if (!orderBy)
-        query = query.OrderByDescending(SelectColumn(columnName));
-    else
-        query = query.OrderBy(SelectColumn(columnName));*/
+        /*var query = (IQueryable<Product>)context.Set<Product>();
+        if (!orderBy)
+            query = query.OrderByDescending(SelectColumn(columnName));
+        else
+            query = query.OrderBy(SelectColumn(columnName));*/
 
-    var query = (IQueryable<Product>)context.Set<Product>().OrderBy(SelectColumn(columnName));
-    if(!orderBy)
-       query = query.Reverse();
+        var query = (IQueryable<Product>)context.Set<Product>().OrderBy(SelectColumn(columnName));
+        if (!orderBy)
+            query = query.Reverse();
 
-    query.ToList().ForEach(p => Console.WriteLine($"{p.Id}: {p.Name} - {p.Price}"));
-}
+        query.ToList().ForEach(p => Console.WriteLine($"{p.Id}: {p.Name} - {p.Price}"));
+    }
 
 
 
