@@ -31,5 +31,8 @@ namespace Models
         public float TotalValue { get; }
 
         public bool IsExpired { get; }
+
+        public OrderType OrderType { get; set; } = OrderType.Standard;
+        public OrderParameters OrderParameters { get; set; } = OrderParameters.None;
     }
 }

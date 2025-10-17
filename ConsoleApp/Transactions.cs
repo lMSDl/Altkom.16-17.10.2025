@@ -13,7 +13,9 @@ namespace ConsoleApp
 
 
             var products = Enumerable.Range(100, 50).Select(x => new Product { Name = $"Product {x}", Price = x * (decimal)Random.Shared.NextDouble() }).ToList();
-            var orders = Enumerable.Range(1, 5).Select(x => new Order { OrderDate = DateTime.Now.AddDays(-x), Name = $"Zamówienie {x}" }).ToList();
+            var orders = Enumerable.Range(1, 5).Select(x => new Order { OrderDate = DateTime.Now.AddDays(-x), Name = $"Zamówienie {x}", 
+                                                                        OrderType = (OrderType) (x % Enum.GetValues<OrderType>().Length),
+                                                                        OrderParameters = (OrderParameters) ((x * x) % 31) }).ToList();
 
             using var context = new Context(config.Options);
             context.RandomFail = randomFail;

@@ -37,10 +37,17 @@ using (var context = new Context(config.Options))
 
 //BackingFields.Run(config);
 
-ComputedColumns.Run(config);
+//ComputedColumns.Run(config);
+
+Transactions.Run(config, false);
+
+using (var context = new Context(config.Options))
+{
+    var orders = context.Set<Order>().Include(o => o.Products).ToList();
+}
 
 
-void OrderBy(bool orderBy, string columnName)
+    void OrderBy(bool orderBy, string columnName)
     {
         config.LogTo(Console.WriteLine);
         using var context = new Context(config.Options);
