@@ -26,11 +26,10 @@ using (var context = new Context(config.Options))
 
 //Transactions.Run(config);
 
-Transactions.Run(config, false);
+//Transactions.Run(config, false);
+//OrderBy(false, "Price");
 
-
-OrderBy(false, "Price");
-
+RelatedData.Run(config);
 
 void OrderBy(bool orderBy, string columnName)
 {
