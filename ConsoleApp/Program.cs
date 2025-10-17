@@ -29,7 +29,9 @@ using (var context = new Context(config.Options))
 //Transactions.Run(config, false);
 //OrderBy(false, "Price");
 
-RelatedData.Run(config);
+//RelatedData.Run(config);
+
+TemporalTables.Run(config);
 
 void OrderBy(bool orderBy, string columnName)
 {
