@@ -39,7 +39,9 @@ TemporalTables.Run(config);
 
 //ComputedColumns.Run(config);
 
-Transactions.Run(config, false);
+//Transactions.Run(config, false);
+
+Views.Run(config);
 
 
 config.LogTo(Console.WriteLine);
